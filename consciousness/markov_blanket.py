@@ -18,7 +18,9 @@ Equation reference:
 """
 
 import math
+
 import numpy as np
+
 from config import BLANKET_THRESHOLD
 
 

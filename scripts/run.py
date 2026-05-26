@@ -17,9 +17,9 @@ Environment:
 """
 
 import argparse
-import sys
-import os
 import multiprocessing as mp
+import os
+import sys
 
 # Add project root to path (one level up from scripts/)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -33,9 +33,10 @@ except RuntimeError:
 
 def run_single_node(steps=50):
     """Run a single-node agent without multiprocessing (for testing)."""
+    from rich.live import Live
+
     from consciousness.agent import Agent
     from consciousness.dashboard import Dashboard
-    from rich.live import Live
 
     agent = Agent(node_id=0)
     dash = Dashboard()
@@ -69,8 +70,8 @@ def run_single_node(steps=50):
 
 def run_multi_node(num_nodes, steps):
     """Run the full multi-node distributed system with dashboard."""
-    from consciousness.orchestrator import Orchestrator
     from consciousness.dashboard import run_dashboard
+    from consciousness.orchestrator import Orchestrator
 
     orch = Orchestrator(num_nodes=num_nodes)
     run_dashboard(orch, steps=steps)
@@ -89,7 +90,7 @@ def run_language_training(steps=200, corpus="tiny_shakespeare"):
     trainer = LanguageTrainer(agent, corpus_name=corpus)
     results = trainer.train(num_steps=steps, log_interval=10, eval_interval=50)
 
-    print(f"\n  Training complete.")
+    print("\n  Training complete.")
     print(f"  Final perplexity: {results['final_perplexity']:.1f}")
     print(f"  Final ε_lang:     {results['final_epsilon_lang']:.4f}")
     print(f"  Tokens processed: {results['tokens_processed']:,}")

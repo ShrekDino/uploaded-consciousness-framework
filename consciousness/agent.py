@@ -30,23 +30,23 @@ Equation reference:
   F_lang = -Σ log p(t_{t+1} | t_{≤t}, μ)                      (language free energy)
 """
 
-import time
 import math
-import torch
-import torch.nn as nn
-import torch.nn.functional as tnf
+
 import numpy as np
+import torch
+import torch.nn.functional as tnf
+
 from config import (
-    LEARNING_RATE, DEVICE,
-    LM_LEARNING_RATE, LM_TEMPERATURE, LM_TOP_K, LM_GENERATE_MAX_TOKENS,
-    LM_MAX_LENGTH,
+    DEVICE,
+    LEARNING_RATE,
+    LM_LEARNING_RATE,
 )
-from consciousness.world_model import WorldModel
-from consciousness.thermostat import Thermostat
-from consciousness.language_thermostat import LanguageThermostat
-from consciousness.markov_blanket import MarkovBlanket
 from consciousness.dqfr import DQFRController
 from consciousness.embedding_env import EmbeddingEnvironment
+from consciousness.language_thermostat import LanguageThermostat
+from consciousness.markov_blanket import MarkovBlanket
+from consciousness.thermostat import Thermostat
+from consciousness.world_model import WorldModel
 
 
 class Agent:
@@ -93,8 +93,8 @@ class Agent:
         """Lazily initialize the language model and its thermostat."""
         if self._language_initialized:
             return
+        from config import LM_MODEL_NAME
         from consciousness.language_world_model import LanguageWorldModel
-        from config import LM_MODEL_NAME, LM_LEARNING_RATE
 
         print(f"  [Agent {self.node_id}] Loading language model: {LM_MODEL_NAME}...")
         self.language_model = LanguageWorldModel(model_name=LM_MODEL_NAME)

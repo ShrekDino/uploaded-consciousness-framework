@@ -1,6 +1,7 @@
 """Hyperparameters for the Uploaded Consciousness framework."""
 
 import os
+
 import torch
 
 # ─── Device ───

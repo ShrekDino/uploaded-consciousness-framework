@@ -14,7 +14,8 @@ Equation reference:
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from config import INPUT_DIM, HIDDEN_DIM, LATENT_DIM, BETA_KL, DEVICE
+
+from config import BETA_KL, DEVICE, HIDDEN_DIM, INPUT_DIM, LATENT_DIM
 
 
 class Encoder(nn.Module):

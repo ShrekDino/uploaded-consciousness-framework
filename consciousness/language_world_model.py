@@ -19,10 +19,10 @@ Equation reference:
   H_lang = -Σ p(t) log p(t)             (token entropy rate)
 """
 
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as tnf
+
 from config import DEVICE
 
 

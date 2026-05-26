@@ -19,7 +19,8 @@ Sinkhorn algorithm.
 """
 
 import numpy as np
-from config import OMEGA_COHERENCE, GWFR_KAPPA, M_STATIC, WEIGHT_ALPHA
+
+from config import GWFR_KAPPA, M_STATIC, OMEGA_COHERENCE, WEIGHT_ALPHA
 
 
 class GWFRMerger:

@@ -14,13 +14,15 @@ Equation reference:
   𝒱_network = Σ(k_B·ε·H_env + Σ λ·I(μ_i; μ_j))        (Eq 14)
 """
 
-import time
 import multiprocessing as mp
-import numpy as np
+import time
 from collections import deque
-from consciousness.node import NodeProcess
+
+import numpy as np
+
+from config import MERGE_INTERVAL, NUM_NODES, OMEGA_COHERENCE
 from consciousness.gwfr_merge import GWFRMerger
-from config import NUM_NODES, MERGE_INTERVAL, OMEGA_COHERENCE
+from consciousness.node import NodeProcess
 
 
 class Orchestrator:

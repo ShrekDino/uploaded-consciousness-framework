@@ -13,9 +13,8 @@ Equation reference:
   S_gen ≥ k_B ln(2) · d/dt H(μ)         (Generalized Landauer, Eq 3)
 """
 
-import math
-import numpy as np
 from collections import deque
+
 from consciousness.thermostat import Thermostat
 
 

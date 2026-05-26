@@ -21,9 +21,9 @@ Equation reference:
   Adiabatic windowing χ(t) — Eq 12
 """
 
-import time
 import numpy as np
-from config import DRIFT_DURATION, SAMPLE_DURATION, SAMPLE_BURST_LR, DQFR_ENABLED
+
+from config import DQFR_ENABLED, DRIFT_DURATION, SAMPLE_BURST_LR, SAMPLE_DURATION
 
 
 class DQFRController:

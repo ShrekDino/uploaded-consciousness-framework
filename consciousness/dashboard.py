@@ -10,15 +10,14 @@ The dashboard renders in the terminal using Rich's Layout, Panel,
 Table, and Progress widgets, with plotext for ASCII plots.
 """
 
-import time
 import numpy as np
-from rich.live import Live
+from rich import box
 from rich.layout import Layout
+from rich.live import Live
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
-from rich.progress import Progress, BarColumn, TextColumn
-from rich import box
+
 from config import PLOT_WINDOW
 
 

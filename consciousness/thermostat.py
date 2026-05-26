@@ -11,10 +11,9 @@ units (nats). The absolute scale is informational, not thermodynamic —
 the equations hold analogically with proper unit scaling.
 """
 
-import math
-import numpy as np
 from collections import deque
-from config import S_GEN_SMOOTHING, EPSILON_WINDOW
+
+from config import S_GEN_SMOOTHING
 
 
 class Thermostat:

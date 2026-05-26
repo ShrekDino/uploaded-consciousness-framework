@@ -11,11 +11,10 @@ The node implements the Quantum State Seeding protocol (Section V):
   - No-Cloning satisfied by construction
 """
 
-import time
 import multiprocessing as mp
-import numpy as np
+import time
+
 from consciousness.agent import Agent
-from config import DEVICE
 
 
 class NodeProcess(mp.Process):

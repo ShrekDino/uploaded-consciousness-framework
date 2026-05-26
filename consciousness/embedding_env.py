@@ -16,9 +16,10 @@ Equation reference:
 """
 
 import math
+
 import numpy as np
-import torch
-from config import INPUT_DIM, ENV_MODE, ENV_NOISE_SCALE, ENV_DRIFT_RATE
+
+from config import ENV_DRIFT_RATE, ENV_MODE, ENV_NOISE_SCALE, INPUT_DIM
 
 
 class EmbeddingEnvironment:

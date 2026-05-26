@@ -19,16 +19,16 @@ Equation reference:
 """
 
 import os
-import math
 import time
-import json
-import torch
-import numpy as np
 from collections import deque
+
+import numpy as np
+import torch
+
 from config import (
-    LANG_BATCH_SIZE, LANG_SEQ_LENGTH, LANG_ACCUMULATE_STEPS,
-    LM_GENERATE_MAX_TOKENS,
     DEVICE,
+    LANG_BATCH_SIZE,
+    LANG_SEQ_LENGTH,
 )
 
 
@@ -198,7 +198,7 @@ class LanguageTrainer:
             eval_interval: generate sample text every N steps
         """
         print(f"\n  {'='*60}")
-        print(f"  LANGUAGE ACQUISITION TRAINING")
+        print("  LANGUAGE ACQUISITION TRAINING")
         print(f"  Corpus: {self.corpus.corpus_name} ({self.corpus.total_tokens:,} tokens)")
         print(f"  Steps: {num_steps}  |  Batch: {LANG_BATCH_SIZE}x{LANG_SEQ_LENGTH}")
         print(f"  {'='*60}\n")
