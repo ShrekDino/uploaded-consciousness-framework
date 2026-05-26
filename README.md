@@ -167,6 +167,16 @@ uploaded-consciousness-framework/
 
 ---
 
+## Sponsorship
+
+This research is conducted entirely in the open. If you find value in the CSDF — whether as a researcher, a student, or a builder — consider sponsoring the work:
+
+→ **[github.com/sponsors/ShrekDino](https://github.com/sponsors/ShrekDino)**
+
+Your sponsorship directly funds compute time, infrastructure, and the formal analysis of each failure mode documented in the registry. See [`SPONSORS.md`](SPONSORS.md) for tier details.
+
+---
+
 ## Dependencies
 
 - `torch>=2.0.0` — neural networks (VAE, GPT-2)
