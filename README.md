@@ -1,3 +1,6 @@
+> **This repo has merged into the [synaptech-platform monorepo](https://github.com/ShrekDino/synaptech-platform) → `packages/csdf/`**.
+> Issues and PRs should be directed there. This repo remains live for stars and reference.
+
 # Consciousness Simulation Diagnostic Framework (CSDF)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
