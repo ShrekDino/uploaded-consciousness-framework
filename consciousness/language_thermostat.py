@@ -70,20 +70,22 @@ class LanguageThermostat(Thermostat):
     @property
     def current_perplexity(self):
         if not self.perplexity_history:
-            return float('inf')
+            return float("inf")
         return self.perplexity_history[-1]
 
     def language_state_dict(self):
         """Extended state dict including language metrics."""
         base = self.state_dict()
-        base.update({
-            "perplexity": self.current_perplexity,
-            "token_accuracy": self.token_accuracy_history[-1] if self.token_accuracy_history else 0.0,
-            "H_lang": self.H_lang_history[-1] if self.H_lang_history else 0.0,
-            "epsilon_lang": self.epsilon_lang,
-            "tokens_processed": self.tokens_processed,
-            "vocab_size": len(self.vocabulary_seen),
-            "perplexity_history": list(self.perplexity_history),
-            "epsilon_lang_history": list(self.epsilon_lang_history),
-        })
+        base.update(
+            {
+                "perplexity": self.current_perplexity,
+                "token_accuracy": self.token_accuracy_history[-1] if self.token_accuracy_history else 0.0,
+                "H_lang": self.H_lang_history[-1] if self.H_lang_history else 0.0,
+                "epsilon_lang": self.epsilon_lang,
+                "tokens_processed": self.tokens_processed,
+                "vocab_size": len(self.vocabulary_seen),
+                "perplexity_history": list(self.perplexity_history),
+                "epsilon_lang_history": list(self.epsilon_lang_history),
+            }
+        )
         return base

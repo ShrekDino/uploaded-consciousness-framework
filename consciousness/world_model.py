@@ -98,7 +98,7 @@ class WorldModel(nn.Module):
         Variational free energy F = -ELBO, so minimizing F = maximizing ELBO.
         """
         kl_div = -0.5 * torch.sum(1 + logvar_z - mu_z.pow(2) - logvar_z.exp(), dim=-1)
-        recon_loss = F.mse_loss(x_hat, x, reduction='none').sum(dim=-1)
+        recon_loss = F.mse_loss(x_hat, x, reduction="none").sum(dim=-1)
         elbo = -BETA_KL * kl_div - recon_loss
         return elbo, kl_div, recon_loss
 

@@ -120,7 +120,7 @@ class LanguageWorldModel(nn.Module):
             shift_mask = torch.ones_like(shift_labels)
 
         # Cross-entropy loss = F
-        loss_fn = nn.CrossEntropyLoss(reduction='none')
+        loss_fn = nn.CrossEntropyLoss(reduction="none")
         token_losses = loss_fn(
             shift_logits.reshape(-1, self.vocab_size),
             shift_labels.reshape(-1),
@@ -170,7 +170,7 @@ class LanguageWorldModel(nn.Module):
             # Top-k filtering
             if top_k > 0:
                 top_k_vals, top_k_idx = torch.topk(next_logits, top_k, dim=-1)
-                next_logits = torch.full_like(next_logits, float('-inf'))
+                next_logits = torch.full_like(next_logits, float("-inf"))
                 next_logits.scatter_(-1, top_k_idx, top_k_vals)
 
             # Sample
@@ -178,9 +178,7 @@ class LanguageWorldModel(nn.Module):
             next_token = torch.multinomial(probs, num_samples=1)
 
             # Compute F for this token
-            token_F = tnf.cross_entropy(
-                next_logits, next_token.squeeze(-1), reduction='none'
-            ).item()
+            token_F = tnf.cross_entropy(next_logits, next_token.squeeze(-1), reduction="none").item()
             F_trace.append(token_F)
 
             # Append token
@@ -192,16 +190,12 @@ class LanguageWorldModel(nn.Module):
             if next_token.item() == self.tokenizer.eos_token_id:
                 break
 
-        generated_text = self.tokenizer.decode(
-            generated_ids[0], skip_special_tokens=True
-        )
+        generated_text = self.tokenizer.decode(generated_ids[0], skip_special_tokens=True)
         return generated_text, len(F_trace), F_trace
 
     def encode_text(self, text):
         """Encode text to token IDs + attention mask."""
-        encoded = self.tokenizer(
-            text, return_tensors="pt", truncation=True, max_length=512
-        )
+        encoded = self.tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
         return encoded.input_ids.to(self.device), encoded.attention_mask.to(self.device)
 
     def decode_tokens(self, token_ids):

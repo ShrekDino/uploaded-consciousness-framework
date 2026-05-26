@@ -62,9 +62,7 @@ class Agent:
 
         # Self-modeling modules (VAE)
         self.world_model = WorldModel()
-        self.optimizer = torch.optim.AdamW(
-            self.world_model.parameters(), lr=LEARNING_RATE, weight_decay=1e-5
-        )
+        self.optimizer = torch.optim.AdamW(self.world_model.parameters(), lr=LEARNING_RATE, weight_decay=1e-5)
         self.thermostat = Thermostat()
 
         # Language modules (loaded lazily)
@@ -73,9 +71,9 @@ class Agent:
         self.language_thermostat = None
 
         self.blanket = MarkovBlanket(
-            dim_internal=32,   # latent dimension
-            dim_blanket=64,    # observation dimension (INPUT_DIM)
-            dim_external=4,    # latent source dimension
+            dim_internal=32,  # latent dimension
+            dim_blanket=64,  # observation dimension (INPUT_DIM)
+            dim_external=4,  # latent source dimension
         )
         self.dqfr = DQFRController()
         self.env = EmbeddingEnvironment(seed=env_seed)
@@ -189,8 +187,9 @@ class Agent:
         else:
             # Evaluation pass: no gradients
             with torch.no_grad():
-                F_val, perplexity, accuracy, H_lang, pooled = \
-                    self.language_model.compute_free_energy(input_ids, attention_mask)
+                F_val, perplexity, accuracy, H_lang, pooled = self.language_model.compute_free_energy(
+                    input_ids, attention_mask
+                )
                 self.internal_mu = pooled.detach().cpu().numpy().flatten()
 
         # Record thermodynamic metrics
@@ -238,18 +237,14 @@ class Agent:
             self.blanket_state = mu  # blanket state ≈ observation
 
             # 4. Update the blanket boundary estimates
-            self._mu_history.append(
-                self.thermostat.F_history[-1] if self.thermostat.F_history else 0.0
-            )
+            self._mu_history.append(self.thermostat.F_history[-1] if self.thermostat.F_history else 0.0)
             self._b_history.append(np.mean(mu))
             self._psi_history.append(self.env.source_state.copy())
             if len(self._mu_history) > 50:
                 self._mu_history.pop(0)
                 self._b_history.pop(0)
                 self._psi_history.pop(0)
-            self.blanket.update_boundaries(
-                self._mu_history, self._b_history, self._psi_history
-            )
+            self.blanket.update_boundaries(self._mu_history, self._b_history, self._psi_history)
 
             # 5. Run the world model: encode → infer → decode
             mu_tensor = torch.from_numpy(mu).float().unsqueeze(0).to(DEVICE)
@@ -263,16 +258,13 @@ class Agent:
 
             # 7. Update optimizer LR from DQFR
             for param_group in self.optimizer.param_groups:
-                param_group['lr'] = lr
+                param_group["lr"] = lr
 
             # 8. Backprop: minimize F (Hamiltonian of the conscious program)
             self.world_model.step_optimize(mu_tensor, self.optimizer)
 
             # 9. Compute computational temperature proxy
-            grad_norm = sum(
-                p.grad.norm().item() for p in self.world_model.parameters()
-                if p.grad is not None
-            )
+            grad_norm = sum(p.grad.norm().item() for p in self.world_model.parameters() if p.grad is not None)
             compute_temp = math.log(1.0 + grad_norm)
             epsilon = self.env.epsilon
 
@@ -306,9 +298,7 @@ class Agent:
 
     def set_weights(self, state_dict):
         """Load merged weights into the world model."""
-        self.world_model.load_state_dict({
-            k: torch.from_numpy(v).to(DEVICE) for k, v in state_dict.items()
-        })
+        self.world_model.load_state_dict({k: torch.from_numpy(v).to(DEVICE) for k, v in state_dict.items()})
 
     def state_dict(self):
         """Full serialized state for inter-node IPC."""

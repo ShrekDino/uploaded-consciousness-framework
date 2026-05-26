@@ -53,12 +53,7 @@ class Orchestrator:
         for i in range(self.num_nodes):
             cmd_q = mp.Queue()
             state_q = mp.Queue()
-            node = NodeProcess(
-                node_id=i,
-                cmd_queue=cmd_q,
-                state_queue=state_q,
-                seed=42 + i
-            )
+            node = NodeProcess(node_id=i, cmd_queue=cmd_q, state_queue=state_q, seed=42 + i)
             node.start()
             self.nodes.append(node)
             self.cmd_queues.append(cmd_q)
@@ -126,9 +121,7 @@ class Orchestrator:
             weights_used = np.array([1.0])
         else:
             # Compute merge
-            merged, distances, weights_used = self.merger.merge(
-                valid_weights, valid_flux
-            )
+            merged, distances, weights_used = self.merger.merge(valid_weights, valid_flux)
 
             # Check Ω_coherence
             max_dist = np.max(distances)
@@ -147,7 +140,7 @@ class Orchestrator:
             "merge_cycle": self.merge_counter,
             "nodes_merged": len(valid_indices),
             "max_distance": float(np.max(distances)) if len(distances) > 0 else 0.0,
-            "weights_used": weights_used.tolist() if hasattr(weights_used, 'tolist') else list(weights_used),
+            "weights_used": weights_used.tolist() if hasattr(weights_used, "tolist") else list(weights_used),
         }
 
     def run(self, steps=200):

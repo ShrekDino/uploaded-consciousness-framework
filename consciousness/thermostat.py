@@ -29,12 +29,12 @@ class Thermostat:
         self.max_history = max_history
 
         # Rolling histories
-        self.F_history = deque(maxlen=max_history)           # variational free energy
-        self.S_gen_history = deque(maxlen=max_history)        # entropy production rate
-        self.epsilon_history = deque(maxlen=max_history)      # extraction efficiency
-        self.recon_loss_history = deque(maxlen=max_history)   # reconstruction error
-        self.kl_history = deque(maxlen=max_history)           # KL divergence
-        self.H_env_history = deque(maxlen=max_history)        # environmental entropy rate
+        self.F_history = deque(maxlen=max_history)  # variational free energy
+        self.S_gen_history = deque(maxlen=max_history)  # entropy production rate
+        self.epsilon_history = deque(maxlen=max_history)  # extraction efficiency
+        self.recon_loss_history = deque(maxlen=max_history)  # reconstruction error
+        self.kl_history = deque(maxlen=max_history)  # KL divergence
+        self.H_env_history = deque(maxlen=max_history)  # environmental entropy rate
         self.temperature_history = deque(maxlen=max_history)  # computational temperature
 
         # Running state
@@ -42,9 +42,9 @@ class Thermostat:
         self.current_S_gen = 0.0
         self.smoothed_S_gen = 0.0
         self.step_count = 0
-        self._T_proxy = 1.0        # computational "temperature"
-        self._T_collapse = 3.0     # thermal collapse threshold
-        self._eps_max = 1.0        # maximum possible efficiency
+        self._T_proxy = 1.0  # computational "temperature"
+        self._T_collapse = 3.0  # thermal collapse threshold
+        self._eps_max = 1.0  # maximum possible efficiency
 
     def record(self, F, kl, recon_loss, H_env, epsilon, compute_temp):
         """Record one step of thermodynamic data.
@@ -64,8 +64,7 @@ class Thermostat:
             delta_F = F - self.prev_F
             self.current_S_gen = abs(delta_F)
             self.smoothed_S_gen = (
-                S_GEN_SMOOTHING * self.smoothed_S_gen
-                + (1 - S_GEN_SMOOTHING) * self.current_S_gen
+                S_GEN_SMOOTHING * self.smoothed_S_gen + (1 - S_GEN_SMOOTHING) * self.current_S_gen
             )
         self.prev_F = F
 

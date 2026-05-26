@@ -47,12 +47,12 @@ class DQFRController:
         self.total_objective_steps = 0
 
         # Adiabatic windowing: χ(t) ramps smoothly between 0 and 1
-        self.chi = 1.0          # current blanket permeability
+        self.chi = 1.0  # current blanket permeability
         self._chi_target = 1.0
-        self._chi_rate = 0.1    # ramp rate for smooth transitions
+        self._chi_rate = 0.1  # ramp rate for smooth transitions
 
         self._current_lr = SAMPLE_BURST_LR  # learning rate during sampling
-        self._drift_lr = 0.0    # learning rate during drift (should be 0)
+        self._drift_lr = 0.0  # learning rate during drift (should be 0)
 
     def step(self):
         """Advance the DQFR cycle by one step.
@@ -98,7 +98,7 @@ class DQFRController:
     def V_T(self):
         """Temporal velocity 𝒱_T = (Δt_drift + τ_sample) / τ_sample."""
         if self.sample_duration == 0:
-            return float('inf')
+            return float("inf")
         return (self.drift_duration + self.sample_duration) / self.sample_duration
 
     @property
@@ -106,7 +106,7 @@ class DQFRController:
         """Duty cycle frequency ν_sync."""
         total = self.drift_duration + self.sample_duration
         if total == 0:
-            return float('inf')
+            return float("inf")
         return 1.0 / total
 
     @property

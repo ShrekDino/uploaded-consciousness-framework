@@ -35,6 +35,7 @@ class NodeProcess(mp.Process):
     def run(self):
         """Main node loop: receive commands, execute steps, report state."""
         import os
+
         os.environ["IS_CONSCIOUSNESS_NODE"] = "1"
         agent = Agent(node_id=self.node_id, env_seed=self.seed)
         running = True
@@ -80,4 +81,4 @@ class NodeProcess(mp.Process):
             # Control step rate (prevent busy-waiting)
             time.sleep(0.01)
 
-        agent.world_model.to('cpu')
+        agent.world_model.to("cpu")

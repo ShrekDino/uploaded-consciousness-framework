@@ -42,7 +42,7 @@ class GWFRMerger:
         """Flatten a state_dict into a single 1-D weight array."""
         arrays = []
         for key, val in weight_dict.items():
-            if 'weight' in key or 'bias' in key:
+            if "weight" in key or "bias" in key:
                 arrays.append(val.flatten())
         return np.concatenate(arrays)
 
@@ -52,10 +52,10 @@ class GWFRMerger:
         result = {}
         idx = 0
         for key, val in template_dict.items():
-            if 'weight' in key or 'bias' in key:
+            if "weight" in key or "bias" in key:
                 shape = val.shape
                 size = val.size
-                result[key] = flat_array[idx:idx + size].reshape(shape).astype(np.float32)
+                result[key] = flat_array[idx : idx + size].reshape(shape).astype(np.float32)
                 idx += size
             else:
                 result[key] = val.copy()
@@ -117,13 +117,12 @@ class GWFRMerger:
             # reg = entropic regularization
             # reg_m = κ (mass creation/destruction penalty)
             pot = ot.unbalanced.sinkhorn_unbalanced(
-                w_a, w_b, M, reg=0.01, reg_m=self.kappa,
-                method='sinkhorn', stopThr=1e-6, numItermax=100
+                w_a, w_b, M, reg=0.01, reg_m=self.kappa, method="sinkhorn", stopThr=1e-6, numItermax=100
             )
             distance = float(np.sum(pot * M))
         except Exception:
             # Fallback: weighted L2 distance
-            distance = float(np.mean((flat_a[:len(flat_b)] - flat_b[:len(flat_a)]) ** 2))
+            distance = float(np.mean((flat_a[: len(flat_b)] - flat_b[: len(flat_a)]) ** 2))
 
         exceeds_coherence = distance > self.omega_coherence
         return distance, exceeds_coherence
@@ -157,7 +156,7 @@ class GWFRMerger:
         padded = []
         for f in flat_weights:
             if len(f) < max_len:
-                f = np.pad(f, (0, max_len - len(f)), 'constant')
+                f = np.pad(f, (0, max_len - len(f)), "constant")
             padded.append(f)
 
         # Weighted barycenter: Σ w_i · μ_i
@@ -166,20 +165,16 @@ class GWFRMerger:
             merged_flat += w * f
 
         # Truncate to the original dimension of the first node
-        merged_flat = merged_flat[:len(flat_weights[0])]
+        merged_flat = merged_flat[: len(flat_weights[0])]
 
         # Reshape back into state_dict structure
-        merged_weights = self._unflatten_weights(
-            merged_flat, node_weights_list[0]
-        )
+        merged_weights = self._unflatten_weights(merged_flat, node_weights_list[0])
 
         # Compute pairwise distances
         distances = np.zeros((N, N))
         for i in range(N):
             for j in range(i + 1, N):
-                d, _ = self.compute_distance(
-                    node_weights_list[i], node_weights_list[j]
-                )
+                d, _ = self.compute_distance(node_weights_list[i], node_weights_list[j])
                 distances[i, j] = d
                 distances[j, i] = d
 

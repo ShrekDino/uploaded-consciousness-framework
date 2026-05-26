@@ -91,8 +91,8 @@ class EmbeddingEnvironment:
         mu = mu + noise
 
         # Estimate entropies using power-based proxy (always non-negative)
-        signal_power = np.mean(mu ** 2)
-        noise_power = np.mean(noise ** 2) if self.noise_scale > 0 else 1e-12
+        signal_power = np.mean(mu**2)
+        noise_power = np.mean(noise**2) if self.noise_scale > 0 else 1e-12
         H_env = 0.5 * math.log(signal_power + noise_power + 1e-12)
 
         # Structured fraction depends on environment mode

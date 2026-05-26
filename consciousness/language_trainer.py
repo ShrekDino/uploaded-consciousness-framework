@@ -70,6 +70,7 @@ class CorpusLoader:
                 url, attribution = self.SUPPORTED_CORPORA[self.corpus_name]
                 print(f"  Downloading {self.corpus_name} from {url}...")
                 import urllib.request
+
                 urllib.request.urlretrieve(url, corpus_path)
                 print(f"  Saved to {corpus_path}")
                 print(f"  Attribution: {attribution}")
@@ -79,7 +80,7 @@ class CorpusLoader:
                     f"and no download URL is registered."
                 )
 
-        with open(corpus_path, 'r', encoding='utf-8') as f:
+        with open(corpus_path, "r", encoding="utf-8") as f:
             self.text = f.read()
 
         print(f"  Corpus loaded: {len(self.text):,} characters")
@@ -110,7 +111,7 @@ class CorpusLoader:
 
         # Split into sequences
         self.num_sequences = self.total_tokens // self.seq_length
-        self.tokens = self.tokens[:self.num_sequences * self.seq_length]
+        self.tokens = self.tokens[: self.num_sequences * self.seq_length]
         self.tokens = self.tokens.reshape(self.num_sequences, self.seq_length)
         print(f"  Split into {self.num_sequences:,} sequences of length {self.seq_length}")
 
@@ -197,11 +198,11 @@ class LanguageTrainer:
             log_interval: print metrics every N steps
             eval_interval: generate sample text every N steps
         """
-        print(f"\n  {'='*60}")
+        print(f"\n  {'=' * 60}")
         print("  LANGUAGE ACQUISITION TRAINING")
         print(f"  Corpus: {self.corpus.corpus_name} ({self.corpus.total_tokens:,} tokens)")
         print(f"  Steps: {num_steps}  |  Batch: {LANG_BATCH_SIZE}x{LANG_SEQ_LENGTH}")
-        print(f"  {'='*60}\n")
+        print(f"  {'=' * 60}\n")
 
         header = f"  {'Step':>6}  {'Phase':>8}  {'F':>8}  {'PPL':>8}  {'Acc':>6}  {'ε_lang':>8}  {'Tok/s':>8}"
         print(header)
@@ -230,7 +231,7 @@ class LanguageTrainer:
                 self._evaluate(step)
 
         # Final evaluation
-        print(f"\n  {'─'*60}")
+        print(f"\n  {'─' * 60}")
         print(f"  TRAINING COMPLETE: {num_steps} steps")
         self._print_summary()
         self._save_checkpoint()
@@ -255,11 +256,9 @@ class LanguageTrainer:
         ]
         print(f"\n  ── Evaluation at step {step} ──")
         for prompt in prompts:
-            gen_text, n_tok, F_trace = self.agent.language_model.generate(
-                prompt, max_new_tokens=30
-            )
+            gen_text, n_tok, F_trace = self.agent.language_model.generate(prompt, max_new_tokens=30)
             avg_F = sum(F_trace) / max(len(F_trace), 1)
-            print(f"  ├ \"{gen_text}\"")
+            print(f'  ├ "{gen_text}"')
             print(f"  └  avg F={avg_F:.3f}, tokens={n_tok}")
         print()
 
@@ -276,10 +275,13 @@ class LanguageTrainer:
     def _save_checkpoint(self):
         """Save model checkpoint."""
         path = os.path.join(self.checkpoint_dir, f"lm_step_{self.step}.pt")
-        torch.save({
-            "step": self.step,
-            "model_state": self.agent.language_model.model.state_dict(),
-            "perplexity": np.mean(self.perplexity_window) if self.perplexity_window else 0,
-            "epsilon_lang": np.mean(self.epsilon_window) if self.epsilon_window else 0,
-        }, path)
+        torch.save(
+            {
+                "step": self.step,
+                "model_state": self.agent.language_model.model.state_dict(),
+                "perplexity": np.mean(self.perplexity_window) if self.perplexity_window else 0,
+                "epsilon_lang": np.mean(self.epsilon_window) if self.epsilon_window else 0,
+            },
+            path,
+        )
         print(f"  Checkpoint saved: {path}")

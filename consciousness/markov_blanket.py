@@ -39,9 +39,9 @@ class MarkovBlanket:
         self.threshold = BLANKET_THRESHOLD
 
         # Track mutual information estimates
-        self._mu_b_mi = 0.0   # I(μ; b)
+        self._mu_b_mi = 0.0  # I(μ; b)
         self._psi_b_mi = 0.0  # I(ψ; b)
-        self._mu_psi_mi = 0.0 # I(μ; ψ) — should be 0 given b
+        self._mu_psi_mi = 0.0  # I(μ; ψ) — should be 0 given b
 
         # Blanket permeability [0, 1]
         self.permeability = 1.0

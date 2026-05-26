@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Use spawn for CUDA multiprocessing compatibility
 try:
-    mp.set_start_method('spawn', force=True)
+    mp.set_start_method("spawn", force=True)
 except RuntimeError:
     pass
 
@@ -53,10 +53,12 @@ def run_single_node(steps=50):
                     "network_vitality": metrics.get("epsilon", 0) * metrics.get("H_env", 0),
                     "pairwise_mi": 0.0,
                     "merge": None,
-                    "states": [{
-                        "metrics": metrics,
-                        "thermo": agent.thermostat.state_dict(),
-                    }],
+                    "states": [
+                        {
+                            "metrics": metrics,
+                            "thermo": agent.thermostat.state_dict(),
+                        }
+                    ],
                 }
                 dash.update(orch_metrics)
                 layout = dash.refresh(orch_metrics)
@@ -97,33 +99,20 @@ def run_language_training(steps=200, corpus="tiny_shakespeare"):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Uploaded Consciousness Framework — Multi-Node Simulation"
-    )
+    parser = argparse.ArgumentParser(description="Uploaded Consciousness Framework — Multi-Node Simulation")
+    parser.add_argument("--single", action="store_true", help="Run single-node test (no multiprocessing)")
     parser.add_argument(
-        "--single", action="store_true",
-        help="Run single-node test (no multiprocessing)"
+        "--steps",
+        type=int,
+        default=50,
+        help="Number of merge cycles (multi-node) or agent display steps (single-node)",
     )
+    parser.add_argument("--nodes", type=int, default=3, help="Number of distributed nodes (multi-node only)")
+    parser.add_argument("--train-lang", action="store_true", help="Run language acquisition training")
     parser.add_argument(
-        "--steps", type=int, default=50,
-        help="Number of merge cycles (multi-node) or agent display steps (single-node)"
+        "--corpus", type=str, default="tiny_shakespeare", help="Training corpus (default: tiny_shakespeare)"
     )
-    parser.add_argument(
-        "--nodes", type=int, default=3,
-        help="Number of distributed nodes (multi-node only)"
-    )
-    parser.add_argument(
-        "--train-lang", action="store_true",
-        help="Run language acquisition training"
-    )
-    parser.add_argument(
-        "--corpus", type=str, default="tiny_shakespeare",
-        help="Training corpus (default: tiny_shakespeare)"
-    )
-    parser.add_argument(
-        "--train-steps", type=int, default=200,
-        help="Number of language training steps"
-    )
+    parser.add_argument("--train-steps", type=int, default=200, help="Number of language training steps")
     args = parser.parse_args()
 
     if args.train_lang:

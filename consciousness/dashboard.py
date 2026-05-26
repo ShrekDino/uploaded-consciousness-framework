@@ -129,8 +129,7 @@ class Dashboard:
             network_info.add_row("Max GWFR dist", f"{merge_result.get('max_distance', 0):.4f}")
             network_info.add_row(
                 "Ω_coherence status",
-                "✓ WITHIN BOUND" if merge_result.get("max_distance", 0) <= 0.5
-                else "⚠ EXCEEDED",
+                "✓ WITHIN BOUND" if merge_result.get("max_distance", 0) <= 0.5 else "⚠ EXCEEDED",
             )
 
         node_panel = Panel(
