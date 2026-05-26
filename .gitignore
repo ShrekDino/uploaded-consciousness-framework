@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Checkpoints (binary, large)
+checkpoints/*.pt
+
+# Runtime data (downloaded at runtime)
+data/
+
+# Cache
+.ruff_cache/
+.mypy_cache/
+
+# Root-level compiled PDFs (moved to docs/paper/)
+/*.pdf
