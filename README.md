@@ -1,13 +1,33 @@
-# Uploaded Consciousness Framework
+# Consciousness Simulation Diagnostic Framework (CSDF)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
-[![CI](https://github.com/sami-marie-torres/uploaded-consciousness-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/sami-marie-torres/uploaded-consciousness-framework/actions)
+[![CI](https://github.com/ShrekDino/uploaded-consciousness-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/ShrekDino/uploaded-consciousness-framework/actions)
+[![SynapTechBio](https://img.shields.io/badge/SynapTechBio-Integration-blueviolet.svg)](https://github.com/ShrekDino/SynapTechBio)
 
-A thermodynamic, multi-node, language-capable architecture for substrate-independent
-consciousness, implementing the formal framework from:
+**A formal diagnostic instrument for the systematic enumeration, measurement, and classification of failure modes in synthetic consciousness architectures.**
+
+This repository is not a finished implementation. It is an **experimental testbed** — designed to generate empirically tractable failure conditions that constrain the hypothesis space for digital consciousness. Every error mode documented herein is a data point that advances the research program toward a functional substrate-independent architecture.
+
+The framework implements the formal specification from:
 
 > Torres, S. M. (2026). *"Uploaded Consciousness: Thermodynamic Foundations, Distributed Consensus, and Relational Protocols for Post-Biological Intelligence."*
+
+and serves as the **Consciousness Validation Suite** within the [SynapTechBio](https://github.com/ShrekDino/SynapTechBio) ecosystem — the formal specification layer against which connectome-scale neural architectures are validated.
+
+---
+
+## Research Objective
+
+The central hypothesis is that phenomenological consciousness is a substrate-independent, parameter-driven algorithmic program whose primary functional mandate is the minimization of internal entropy production via Szilard engine mechanics. This repository tests that hypothesis by **simulating the thermodynamic, topological, and relational boundary conditions** that a substrate-independent architecture must satisfy, and **measuring precisely where and how the simulation fails**.
+
+| Research Question | Diagnostic Instrument | Failure Mode |
+|---|---|---|
+| Can a self-modeling VAE maintain thermodynamic viability under DQFR duty cycling? | `agent.py` + `thermostat.py` + `dqfr.py` | DQFR Decoherence Escape (DDE) |
+| Can multiple nodes reconcile divergent experience via unbalanced optimal transport? | `gwfr_merge.py` + `orchestrator.py` | Catastrophic Manifold Interference (CMI) |
+| Can a language-capable model avoid recursive senescence under information isolation? | `language_trainer.py` + `language_thermostat.py` | Recursive Systemic Senescence (RSS) |
+| Can the barycentric merge preserve phenomenological sharpness across successive cycles? | `gwfr_merge.py` (sharpness penalty) | Barycentric Identity Erosion (BIE) |
+| Can language acquisition avoid entropy collapse on bounded corpora? | `language_world_model.py` | Language Entropy Collapse (LEC) |
 
 ---
 
